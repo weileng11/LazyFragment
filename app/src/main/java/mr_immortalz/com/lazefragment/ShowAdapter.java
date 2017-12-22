@@ -43,4 +43,5 @@ public class ShowAdapter extends BaseAdapter {
         tv.setText(mList.get(position));
         return view;
     }
+
 }

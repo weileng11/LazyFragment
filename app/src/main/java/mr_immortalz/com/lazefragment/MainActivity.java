@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +49,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public int getCount() {
                 return mList.size();
+            }
+
+            @Override
+            public void destroyItem(ViewGroup container, int position, Object object) {
+
             }
         };
 

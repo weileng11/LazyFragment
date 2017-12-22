@@ -40,6 +40,11 @@ public abstract class BaseFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         LogUtil.m("context" + "   " + this.getClass().getSimpleName());
@@ -52,7 +57,6 @@ public abstract class BaseFragment extends Fragment {
         if (isVisibleToUser) {
             isVisible = true;
             lazyLoadData();
-
         } else {
             isVisible = false;
         }

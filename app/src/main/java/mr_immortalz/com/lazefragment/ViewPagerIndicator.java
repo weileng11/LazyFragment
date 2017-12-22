@@ -7,6 +7,7 @@ import android.graphics.RectF;
 import android.os.Build;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -32,9 +33,9 @@ public class ViewPagerIndicator extends LinearLayout {
     private float mHeight = 0;
     private float mLeft = 0;
     private float mTop = 0;
-    private float radiusX = 10;
-    private float radiusY = 10;
-    private int mPadding = 8;
+    private float radiusX = 40;
+    private float radiusY = 40;
+    private int mPadding = 12;
 
     private List<String> mDatas;
     private boolean isSetData = false;
@@ -65,10 +66,13 @@ public class ViewPagerIndicator extends LinearLayout {
 
     private void init() {
         //LogUtil.m();
-        this.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg));
+        this.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg)); //整个控件背景
         paint = new Paint();
         paint.setStyle(Paint.Style.FILL);
-        paint.setColor(getResources().getColor(R.color.white));
+//        paint.setStrokeWidth(15);
+        paint.setAntiAlias(true);// 设置画笔的锯齿效果
+//        paint.setStrokeCap(Paint.Cap.ROUND);
+        paint.setColor(getResources().getColor(R.color.colorPrimary)); //画笔移动背景的颜色
         paint.setAntiAlias(true);
     }
 
@@ -99,7 +103,7 @@ public class ViewPagerIndicator extends LinearLayout {
                 lp.width = width / visibleItemCount;
                 lp.height = height;
                 tv.setGravity(Gravity.CENTER);
-                tv.setTextColor(getResources().getColor(R.color.font_red));
+                tv.setTextColor(getResources().getColor(R.color.colorPrimary)); //文字的颜色
                 tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
                 tv.setLayoutParams(lp);
                 final int finalI = i;
@@ -128,10 +132,19 @@ public class ViewPagerIndicator extends LinearLayout {
         //LogUtil.m();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             //drawRoundRect需要的最低API是21
+//            RectF oval2 = new RectF(50, 260, 200, 300);// 设置个新的长方形
+//            canvas.drawRoundRect(oval2, 20, 15, paint);
+            String left=String.valueOf(mLeft + mPadding);
+            String right=String.valueOf(mLeft + mWidth - mPadding);
+            String top=String.valueOf(mTop + mPadding);
+            String booo=String.valueOf(mTop + mHeight - mPadding);
+            Log.i("info","onDraw"+left+"mTop"+top+"right=="+right+"booo=="+ booo);
             canvas.drawRoundRect(mLeft + mPadding, mTop + mPadding, mLeft + mWidth - mPadding, mTop + mHeight - mPadding, radiusX, radiusY, paint);
         } else {
-            canvas.drawRoundRect(new RectF(mLeft + mPadding, mTop + mPadding, mLeft + mWidth - mPadding, mTop + mHeight - mPadding), radiusX, radiusX, paint);
+//            canvas.drawRoundRect(new RectF(mLeft + mPadding, mTop + mPadding, mLeft + mWidth - mPadding, mTop + mHeight - mPadding), radiusX, radiusX, paint);
             //canvas.drawRect(mLeft + mPadding, mTop + mPadding, mLeft + mWidth - mPadding, mTop + mHeight - mPadding, paint);
+            RectF oval3 = new RectF(50, 260, 200, 300);// 设置个新的长方形
+            canvas.drawRoundRect(oval3, 20, 15, paint);
         }
 
 
@@ -263,9 +276,9 @@ public class ViewPagerIndicator extends LinearLayout {
         if (getChildCount() > 0) {
             for (int i = 0; i < getChildCount(); i++) {
                 if (i == currentPosition) {
-                    ((TextView) getChildAt(currentPosition)).setTextColor(getResources().getColor(R.color.font_red));
+                    ((TextView) getChildAt(currentPosition)).setTextColor(getResources().getColor(R.color.white)); //滑动到此处的颜色
                 } else {
-                    ((TextView) getChildAt(i)).setTextColor(getResources().getColor(R.color.font_white));
+                    ((TextView) getChildAt(i)).setTextColor(getResources().getColor(R.color.colorPrimary));//没有滑动到此处的颜色
                 }
             }
         }
